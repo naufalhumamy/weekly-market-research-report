@@ -1,0 +1,254 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sinokor Jakarta Week 41</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: harbour-board report. Deep teal letterhead band, stat tiles, colour-coded carriers and trend pills, one column of numbered HQ sections (numbering is the HQ report spec). */
+:root {
+  --bg: #e6edef; --paper: #ffffff; --panel: #f3f7f8; --ink: #0f2230; --muted: #53687a; --rule: #cfdbdf;
+  --harbor: #0b5f7a; --harbor-soft: #dcecf2; --band: #0b2a3c; --band-ink: #eaf4f8; --band-muted: #9fc3d6;
+  --signal: #d4562a; --signal-soft: #fbe9df;
+  --up: #23795c; --up-soft: #e0f1e9; --down: #b3372f; --down-soft: #f8e3e1; --warn: #9a630f; --warn-soft: #fbefd9;
+  --ck: #0b6e8f; --ck-bg: #e1eef3; --rcl: #b44f19; --rcl-bg: #f8e9e0; --nss: #4a4ea8; --nss-bg: #e8e9f7;
+  --barbg: #e3eaed;
+  --shadow: 0 1px 2px rgba(15,34,48,.06), 0 8px 22px -14px rgba(15,34,48,.28);
+  --display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b151c; --paper: #111f29; --panel: #16262f; --ink: #e5eef2; --muted: #93a8b4; --rule: #243746;
+  --harbor: #62b9dc; --harbor-soft: #0f2e3b; --band: #08202e; --band-ink: #e5eef2; --band-muted: #8fb4c8;
+  --signal: #f27d50; --signal-soft: #3a1f13;
+  --up: #4fc095; --up-soft: #10301f; --down: #f0827a; --down-soft: #3a1714; --warn: #e2b24c; --warn-soft: #33260c;
+  --ck: #56c1e4; --ck-bg: #0e2c37; --rcl: #f0965c; --rcl-bg: #35200f; --nss: #9ca1f2; --nss-bg: #1d1f3d;
+  --barbg: #1d2f3a; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 22px -14px rgba(0,0,0,.7);
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0b151c; --paper: #111f29; --panel: #16262f; --ink: #e5eef2; --muted: #93a8b4; --rule: #243746;
+  --harbor: #62b9dc; --harbor-soft: #0f2e3b; --band: #08202e; --band-ink: #e5eef2; --band-muted: #8fb4c8;
+  --signal: #f27d50; --signal-soft: #3a1f13;
+  --up: #4fc095; --up-soft: #10301f; --down: #f0827a; --down-soft: #3a1714; --warn: #e2b24c; --warn-soft: #33260c;
+  --ck: #56c1e4; --ck-bg: #0e2c37; --rcl: #f0965c; --rcl-bg: #35200f; --nss: #9ca1f2; --nss-bg: #1d1f3d;
+  --barbg: #1d2f3a; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 22px -14px rgba(0,0,0,.7);
+  color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; margin: 0; padding-inline: 16px; padding-block: 24px 48px; }
+.sheet { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.num, .mono { font-variant-numeric: tabular-nums; }
+
+/* letterhead band */
+.band { background: var(--band); color: var(--band-ink); border-radius: 14px; padding: 28px 30px 24px; position: relative; overflow: hidden; }
+.band::after { content: ""; position: absolute; inset: auto 0 0 0; height: 6px;
+  background: repeating-linear-gradient(90deg, var(--signal) 0 46px, var(--harbor) 46px 92px, var(--up) 92px 138px, var(--nss) 138px 184px); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--signal); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 6vw, 44px); line-height: 1.02; margin: 8px 0 14px; text-wrap: balance; letter-spacing: .005em; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--band-muted) 45%, transparent); font-family: var(--mono); font-size: 12px; color: var(--band-muted); }
+.pill b { color: var(--band-ink); font-weight: 500; }
+
+/* sections */
+section.card { background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 24px 24px; box-shadow: var(--shadow); min-width: 0; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 24px; line-height: 1.1; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; text-wrap: balance; }
+h2 .n { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--harbor); color: var(--paper); font-family: var(--mono); font-size: 13px; flex: none; }
+h3 { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+ul li::marker { color: var(--harbor); }
+p { margin: 0; }
+
+/* exec summary */
+.exec { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.exec article { border-radius: 12px; padding: 12px 16px 14px; background: var(--panel); border-left: 5px solid var(--c); min-width: 0; }
+.exec .k { font-family: var(--display); font-weight: 600; font-size: 19px; color: var(--c); margin-bottom: 4px; }
+.exec p { font-size: 14.5px; }
+
+/* stat tiles */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.stat { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+.stat .big { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1.05; }
+.stat .chg { display: inline-block; margin-top: 4px; padding: 1px 8px; border-radius: 999px; font-family: var(--mono); font-size: 12px; font-weight: 500; }
+.chg.up { background: var(--up-soft); color: var(--up); }
+.chg.down { background: var(--down-soft); color: var(--down); }
+.stat .lbl { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+caption { text-align: left; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; }
+thead th { background: var(--harbor-soft); color: var(--harbor); text-align: left; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; white-space: nowrap; }
+thead th:first-child { border-radius: 8px 0 0 8px; } thead th:last-child { border-radius: 0 8px 8px 0; }
+td { padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+th.num, td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+tbody.alt td { background: var(--panel); }
+td.ln { font-weight: 600; white-space: nowrap; }
+td.cond { font-size: 13px; color: var(--muted); min-width: 200px; }
+.trend { display: inline-block; padding: 2px 10px; border-radius: 999px; font-weight: 600; white-space: nowrap; font-size: 13px; }
+.trend.up { background: var(--up-soft); color: var(--up); }
+.car { display: inline-block; padding: 2px 9px; border-radius: 6px; font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.car.ck { background: var(--ck-bg); color: var(--ck); }
+.car.rcl { background: var(--rcl-bg); color: var(--rcl); }
+.car.nss { background: var(--nss-bg); color: var(--nss); }
+td.r40 { min-width: 120px; }
+td.r40 .v { display: block; }
+.bar { display: block; height: 5px; border-radius: 3px; background: var(--barbg); margin-top: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--bc, var(--harbor)); border-radius: 3px; }
+.legend { margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+.note { margin-top: 12px; color: var(--muted); }
+
+/* rate notes */
+.notes { list-style: none; padding: 0; margin-top: 16px; gap: 8px; }
+.notes li { display: grid; grid-template-columns: 104px 1fr; gap: 12px; align-items: start; font-size: 14px; }
+.tag { display: inline-block; text-align: center; padding: 2px 8px; border-radius: 6px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; margin-top: 2px; }
+.tag.ok { background: var(--up-soft); color: var(--up); }
+.tag.info { background: var(--nss-bg); color: var(--nss); }
+.tag.neutral { background: var(--harbor-soft); color: var(--harbor); }
+.tag.warn { background: var(--warn-soft); color: var(--warn); }
+
+/* news + port */
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.pair section.card { border-top: 4px solid var(--c); }
+
+/* actions */
+.actions { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; }
+.steps { list-style: none; padding: 0; gap: 10px; }
+.steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.steps li b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--signal-soft); color: var(--signal); font-family: var(--mono); font-size: 12px; }
+.request { background: var(--panel); border-radius: 12px; padding: 14px 16px; border-left: 4px solid var(--signal); }
+footer { text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 4px; }
+@media (max-width: 600px) {
+  .band { padding: 22px 18px 22px; } section.card { padding: 18px 16px 20px; }
+  .actions { grid-template-columns: 1fr; }
+  .notes li { grid-template-columns: 1fr; gap: 4px; } .tag { justify-self: start; }
+}
+</style>
+
+<main class="sheet">
+  <header class="band">
+    <div class="eyebrow">Weekly Market Report · Jakarta to HQ</div>
+    <h1>Sinokor Jakarta — Weekly Market Report</h1>
+    <div class="meta"><span class="pill"><b>Week 41</b></span><span class="pill">5 October 2026</span><span class="pill">Prepared by: Jakarta Marketing</span></div>
+  </header>
+
+  <section class="card">
+    <h2><span class="n">1</span>Executive Summary</h2>
+    <div class="exec">
+      <article style="--c: var(--signal)"><div class="k">China lane competition</div><p>More competition on the China–Jakarta lane. HMM, PIL and RCL open a new Qingdao–Shanghai–Nansha–Jakarta loop (first sailing 8 November). Meratus starts a Shanghai–Nansha–HCM–Jakarta service.</p></article>
+      <article style="--c: var(--up)"><div class="k">National exports up</div><p>Indonesia exports in August were USD 26.61 billion, up 6.72% YoY. Exports to China in January–August were up 17.42% YoY.</p></article>
+      <article style="--c: var(--down)"><div class="k">Jakarta exports down</div><p>DKI Jakarta-origin exports in August were USD 1.18 billion, down 19.88% YoY. DKI Jakarta exports to Thailand were up 57% YTD.</p></article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>Jakarta Export Market</h2>
+    <div class="stats">
+      <div class="stat"><div class="big num">USD 26.61 bn</div><span class="chg up">▲ 6.72% YoY</span><span class="lbl">National exports, August</span></div>
+      <div class="stat"><div class="big num">▲ 17.42%</div><span class="chg up">YoY</span><span class="lbl">Exports to China, January–August</span></div>
+      <div class="stat"><div class="big num">USD 1.18 bn</div><span class="chg down">▼ 19.88% YoY</span><span class="lbl">DKI Jakarta-origin exports, August</span></div>
+      <div class="stat"><div class="big num">▲ 57%</div><span class="chg up">YTD</span><span class="lbl">DKI Jakarta exports to Thailand</span></div>
+    </div>
+    <ul>
+      <li>National exports (August): USD 26.61 billion, up 6.72% YoY.</li>
+      <li>Main drivers: manufacturing (up 12.48%), nickel, iron and steel, and aluminium.</li>
+      <li>Exports to China (January–August): up 17.42% YoY.</li>
+      <li>DKI Jakarta-origin exports (August): USD 1.18 billion, down 19.88% YoY. The main decline was in jewelry and footwear.</li>
+      <li>DKI Jakarta exports to Thailand: up 57% YTD.</li>
+      <li>Golden Week holiday in China is reducing China bookings this week. This effect is temporary.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>Lane Outlook</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Lane</th><th>Trend</th><th>Comment</th></tr></thead>
+        <tbody>
+          <tr><td class="ln">China</td><td><span class="trend up">▲ Uptrend</span></td><td>Exports to China up 17.42% YoY (January–August). Bookings are lower during Golden Week. Confidence: medium.</td></tr>
+          <tr><td class="ln">Thailand</td><td><span class="trend up">▲ Uptrend</span></td><td>DKI Jakarta exports to Thailand up 57% YTD. Confidence: medium.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Other lanes: no clear trend signal this week.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>Competitor Rate Monitor</h2>
+    <div class="table-wrap">
+      <table>
+        <caption>Competitor rates — October 2026</caption>
+        <thead><tr><th>Lane</th><th>Carrier</th><th class="num">20'</th><th class="num">40'</th><th>Rate condition</th></tr></thead>
+<tbody class="lane">
+<tr><td class="ln">Jakarta–Shanghai</td><td><span class="car ck">CK LINE</span></td><td class="num r40"><span class="v">USD 50</span><span class="bar"><i style="width:6.2%;--bc:var(--ck)"></i></span></td><td class="num r40"><span class="v">USD 100</span><span class="bar"><i style="width:12.5%;--bc:var(--ck)"></i></span></td><td class="cond">All-in: OF+FAF+LTHC+LSS</td></tr>
+<tr><td class="ln"></td><td><span class="car rcl">RCL</span></td><td class="num r40"><span class="v">USD 85</span><span class="bar"><i style="width:10.6%;--bc:var(--rcl)"></i></span></td><td class="num r40"><span class="v">USD 145</span><span class="bar"><i style="width:18.1%;--bc:var(--rcl)"></i></span></td><td class="cond"></td></tr>
+<tr><td class="ln"></td><td><span class="car nss">NAMSUNG</span></td><td class="num r40"><span class="v">USD 300</span><span class="bar"><i style="width:37.5%;--bc:var(--nss)"></i></span></td><td class="num r40"><span class="v">USD 600</span><span class="bar"><i style="width:75.0%;--bc:var(--nss)"></i></span></td><td class="cond"></td></tr>
+</tbody>
+<tbody class="lane alt">
+<tr><td class="ln">Jakarta–Ho Chi Minh</td><td><span class="car ck">CK LINE</span></td><td class="num r40"><span class="v">USD 10</span><span class="bar"><i style="width:1.2%;--bc:var(--ck)"></i></span></td><td class="num r40"><span class="v">USD 20</span><span class="bar"><i style="width:2.5%;--bc:var(--ck)"></i></span></td><td class="cond">All-in: OF+FAF+LTHC+LSS</td></tr>
+<tr><td class="ln"></td><td><span class="car nss">NAMSUNG</span></td><td class="num r40"><span class="v">USD 50</span><span class="bar"><i style="width:6.2%;--bc:var(--nss)"></i></span></td><td class="num r40"><span class="v">USD 100</span><span class="bar"><i style="width:12.5%;--bc:var(--nss)"></i></span></td><td class="cond"></td></tr>
+</tbody>
+<tbody class="lane">
+<tr><td class="ln">Jakarta–Busan/Kwangyang/Ulsan</td><td><span class="car ck">CK LINE</span></td><td class="num r40"><span class="v">USD 350</span><span class="bar"><i style="width:43.8%;--bc:var(--ck)"></i></span></td><td class="num r40"><span class="v">USD 700</span><span class="bar"><i style="width:87.5%;--bc:var(--ck)"></i></span></td><td class="cond">All-in: OF+FAF+LTHC+LSS+EBS+CRS</td></tr>
+<tr><td class="ln"></td><td><span class="car nss">NAMSUNG</span></td><td class="num r40"><span class="v">USD 350</span><span class="bar"><i style="width:43.8%;--bc:var(--nss)"></i></span></td><td class="num r40"><span class="v">USD 700</span><span class="bar"><i style="width:87.5%;--bc:var(--nss)"></i></span></td><td class="cond"></td></tr>
+</tbody>
+<tbody class="lane alt">
+<tr><td class="ln">Jakarta–Incheon</td><td><span class="car ck">CK LINE</span></td><td class="num r40"><span class="v">USD 400</span><span class="bar"><i style="width:50.0%;--bc:var(--ck)"></i></span></td><td class="num r40"><span class="v">USD 800</span><span class="bar"><i style="width:100.0%;--bc:var(--ck)"></i></span></td><td class="cond">All-in: OF+FAF+LTHC+LSS+EBS+CRS+CIS</td></tr>
+<tr><td class="ln"></td><td><span class="car nss">NAMSUNG</span></td><td class="num r40"><span class="v">USD 400</span><span class="bar"><i style="width:50.0%;--bc:var(--nss)"></i></span></td><td class="num r40"><span class="v">USD 800</span><span class="bar"><i style="width:100.0%;--bc:var(--nss)"></i></span></td><td class="cond"></td></tr>
+</tbody>
+<tbody class="lane">
+<tr><td class="ln">Jakarta–Japan Main Ports</td><td><span class="car rcl">RCL</span></td><td class="num r40"><span class="v">USD 250</span><span class="bar"><i style="width:31.2%;--bc:var(--rcl)"></i></span></td><td class="num r40"><span class="v">USD 330</span><span class="bar"><i style="width:41.2%;--bc:var(--rcl)"></i></span></td><td class="cond">All-in: OF+FAF+LTHC+LSS</td></tr>
+<tr><td class="ln"></td><td><span class="car ck">CK LINE</span></td><td class="num r40"><span class="v">USD 400</span><span class="bar"><i style="width:50.0%;--bc:var(--ck)"></i></span></td><td class="num r40"><span class="v">USD 800</span><span class="bar"><i style="width:100.0%;--bc:var(--ck)"></i></span></td><td class="cond"></td></tr>
+<tr><td class="ln"></td><td><span class="car nss">NAMSUNG</span></td><td class="num r40"><span class="v">USD 450</span><span class="bar"><i style="width:56.2%;--bc:var(--nss)"></i></span></td><td class="num r40"><span class="v">USD 750</span><span class="bar"><i style="width:93.8%;--bc:var(--nss)"></i></span></td><td class="cond"></td></tr>
+</tbody>
+<tbody class="lane alt">
+<tr><td class="ln">Jakarta–Hong Kong</td><td><span class="car nss">NAMSUNG</span></td><td class="num r40"><span class="v">USD 50</span><span class="bar"><i style="width:6.2%;--bc:var(--nss)"></i></span></td><td class="num r40"><span class="v">USD 100</span><span class="bar"><i style="width:12.5%;--bc:var(--nss)"></i></span></td><td class="cond">OF+LTHC+LSS (EFS USD 30/TEU, AFS USD 30/BL extra)</td></tr>
+</tbody>
+      </table>
+    </div>
+    <p class="legend">Bars under each 20' and 40' rate: same scale, USD 0 to USD 800.</p>
+    <ul class="notes">
+<li><span class="tag ok">No change</span><span>No rate changes to report. Each carrier has one October rate in the tracker, so there is no previous rate to compare.</span></li>
+<li><span class="tag info">Rate basis</span><span>NAMSUNG rates are on a different basis: OF+LTHC+LSS, no FAF. EFS is extra (USD 30/TEU Shanghai, Ho Chi Minh, Hong Kong; USD 60/TEU Japan; USD 100/TEU Korea), plus documentation, seal and admin charges. NAMSUNG Busan and Incheon rates include EBS/NBS (Incheon also CID).</span></li>
+<li><span class="tag neutral">Multi-port</span><span>Multi-port lanes show the lowest rate. NAMSUNG Ulsan: USD 400 / USD 800. RCL Japan 40': USD 330 (Tokyo, Yokohama), USD 360 (Osaka), USD 430 (Kobe). NAMSUNG Japan rate is for Tokyo.</span></li>
+<li><span class="tag ok">Freshness</span><span>All rates are fresh (dated 5–8 October 2026). No aging or stale data.</span></li>
+    </ul>
+  </section>
+
+  <div class="pair">
+    <section class="card" style="--c: var(--signal)">
+      <h2><span class="n">5</span>Competitor &amp; Service News</h2>
+      <ul>
+        <li>HMM, PIL and RCL: new joint loop Qingdao–Shanghai–Nansha–Jakarta. First sailing 8 November.</li>
+        <li>Meratus: new service Shanghai–Nansha–HCM–Jakarta.</li>
+        <li>Both services add capacity on the China–Jakarta lane.</li>
+      </ul>
+    </section>
+    <section class="card" style="--c: var(--up)">
+      <h2><span class="n">6</span>Regulation &amp; Port Update</h2>
+      <ul>
+        <li>Tanjung Priok: operations normal. No congestion reported.</li>
+        <li>IPC TPK Priok terminal volume: up 13.2% YTD.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2><span class="n">7</span>Action Plan &amp; Request to HQ</h2>
+    <div class="actions">
+      <div>
+        <h3>Action Plan (Jakarta)</h3>
+        <ul class="steps">
+          <li><b>1</b><span>Follow up China-lane customers after Golden Week to recover bookings.</span></li>
+          <li><b>2</b><span>Monitor the HMM/PIL/RCL and Meratus China services before the first sailing on 8 November.</span></li>
+          <li><b>3</b><span>Focus sales on Thailand cargo, where DKI Jakarta exports are growing.</span></li>
+        </ul>
+      </div>
+      <div class="request">
+        <h3>Request to HQ</h3>
+        <p>No request this week.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Sinokor Merchant Marine · Jakarta Office · Week 41, 2026</footer>
+</main>
+
+</body></html>

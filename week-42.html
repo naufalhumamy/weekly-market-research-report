@@ -1,0 +1,239 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sinokor Jakarta Week 42</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: harbour-board report. Deep teal letterhead band, stat tiles, colour-coded carriers and trend pills, one column of numbered HQ sections (numbering is the HQ report spec). */
+:root {
+  --bg: #e6edef; --paper: #ffffff; --panel: #f3f7f8; --ink: #0f2230; --muted: #53687a; --rule: #cfdbdf;
+  --harbor: #0b5f7a; --harbor-soft: #dcecf2; --band: #0b2a3c; --band-ink: #eaf4f8; --band-muted: #9fc3d6;
+  --signal: #d4562a; --signal-soft: #fbe9df;
+  --up: #23795c; --up-soft: #e0f1e9; --down: #b3372f; --down-soft: #f8e3e1; --warn: #9a630f; --warn-soft: #fbefd9;
+  --ck: #0b6e8f; --ck-bg: #e1eef3; --rcl: #b44f19; --rcl-bg: #f8e9e0; --nss: #4a4ea8; --nss-bg: #e8e9f7;
+  --barbg: #e3eaed;
+  --shadow: 0 1px 2px rgba(15,34,48,.06), 0 8px 22px -14px rgba(15,34,48,.28);
+  --display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b151c; --paper: #111f29; --panel: #16262f; --ink: #e5eef2; --muted: #93a8b4; --rule: #243746;
+  --harbor: #62b9dc; --harbor-soft: #0f2e3b; --band: #08202e; --band-ink: #e5eef2; --band-muted: #8fb4c8;
+  --signal: #f27d50; --signal-soft: #3a1f13;
+  --up: #4fc095; --up-soft: #10301f; --down: #f0827a; --down-soft: #3a1714; --warn: #e2b24c; --warn-soft: #33260c;
+  --ck: #56c1e4; --ck-bg: #0e2c37; --rcl: #f0965c; --rcl-bg: #35200f; --nss: #9ca1f2; --nss-bg: #1d1f3d;
+  --barbg: #1d2f3a; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 22px -14px rgba(0,0,0,.7);
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0b151c; --paper: #111f29; --panel: #16262f; --ink: #e5eef2; --muted: #93a8b4; --rule: #243746;
+  --harbor: #62b9dc; --harbor-soft: #0f2e3b; --band: #08202e; --band-ink: #e5eef2; --band-muted: #8fb4c8;
+  --signal: #f27d50; --signal-soft: #3a1f13;
+  --up: #4fc095; --up-soft: #10301f; --down: #f0827a; --down-soft: #3a1714; --warn: #e2b24c; --warn-soft: #33260c;
+  --ck: #56c1e4; --ck-bg: #0e2c37; --rcl: #f0965c; --rcl-bg: #35200f; --nss: #9ca1f2; --nss-bg: #1d1f3d;
+  --barbg: #1d2f3a; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 22px -14px rgba(0,0,0,.7);
+  color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; margin: 0; padding-inline: 16px; padding-block: 24px 48px; }
+.sheet { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.num, .mono { font-variant-numeric: tabular-nums; }
+
+/* letterhead band */
+.band { background: var(--band); color: var(--band-ink); border-radius: 14px; padding: 28px 30px 24px; position: relative; overflow: hidden; }
+.band::after { content: ""; position: absolute; inset: auto 0 0 0; height: 6px;
+  background: repeating-linear-gradient(90deg, var(--signal) 0 46px, var(--harbor) 46px 92px, var(--up) 92px 138px, var(--nss) 138px 184px); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--signal); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 6vw, 44px); line-height: 1.02; margin: 8px 0 14px; text-wrap: balance; letter-spacing: .005em; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--band-muted) 45%, transparent); font-family: var(--mono); font-size: 12px; color: var(--band-muted); }
+.pill b { color: var(--band-ink); font-weight: 500; }
+
+/* sections */
+section.card { background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 24px 24px; box-shadow: var(--shadow); min-width: 0; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 24px; line-height: 1.1; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; text-wrap: balance; }
+h2 .n { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--harbor); color: var(--paper); font-family: var(--mono); font-size: 13px; flex: none; }
+h3 { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+ul li::marker { color: var(--harbor); }
+p { margin: 0; }
+
+/* exec summary */
+.exec { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.exec article { border-radius: 12px; padding: 12px 16px 14px; background: var(--panel); border-left: 5px solid var(--c); min-width: 0; }
+.exec .k { font-family: var(--display); font-weight: 600; font-size: 19px; color: var(--c); margin-bottom: 4px; }
+.exec p { font-size: 14.5px; }
+
+/* stat tiles */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.stat { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+.stat .big { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1.05; }
+.stat .chg { display: inline-block; margin-top: 4px; padding: 1px 8px; border-radius: 999px; font-family: var(--mono); font-size: 12px; font-weight: 500; }
+.chg.up { background: var(--up-soft); color: var(--up); }
+.chg.down { background: var(--down-soft); color: var(--down); }
+.stat .lbl { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+caption { text-align: left; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; }
+thead th { background: var(--harbor-soft); color: var(--harbor); text-align: left; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; white-space: nowrap; }
+thead th:first-child { border-radius: 8px 0 0 8px; } thead th:last-child { border-radius: 0 8px 8px 0; }
+td { padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+th.num, td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+tbody.alt td { background: var(--panel); }
+td.ln { font-weight: 600; white-space: nowrap; }
+td.cond { font-size: 13px; color: var(--muted); min-width: 200px; }
+.trend { display: inline-block; padding: 2px 10px; border-radius: 999px; font-weight: 600; white-space: nowrap; font-size: 13px; }
+.trend.up { background: var(--up-soft); color: var(--up); }
+.lanes { list-style: none; padding: 0; margin-top: 12px; gap: 8px; }
+.lanes li { display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 14px; }
+.lanes li b { font-weight: 600; }
+.blk + .blk { margin-top: 16px; }
+.callout { background: var(--panel); border-left: 5px solid var(--harbor); border-radius: 12px; padding: 14px 16px; font-weight: 500; }
+@media (max-width: 600px) { .lanes li { grid-template-columns: 1fr; gap: 2px; } }
+.car { display: inline-block; padding: 2px 9px; border-radius: 6px; font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.car.ck { background: var(--ck-bg); color: var(--ck); }
+.car.rcl { background: var(--rcl-bg); color: var(--rcl); }
+.car.nss { background: var(--nss-bg); color: var(--nss); }
+td.r40 { min-width: 120px; }
+td.r40 .v { display: block; }
+.bar { display: block; height: 5px; border-radius: 3px; background: var(--barbg); margin-top: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--bc, var(--harbor)); border-radius: 3px; }
+.legend { margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+.note { margin-top: 12px; color: var(--muted); }
+
+/* rate notes */
+.notes { list-style: none; padding: 0; margin-top: 16px; gap: 8px; }
+.notes li { display: grid; grid-template-columns: 104px 1fr; gap: 12px; align-items: start; font-size: 14px; }
+.tag { display: inline-block; text-align: center; padding: 2px 8px; border-radius: 6px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; margin-top: 2px; }
+.tag.ok { background: var(--up-soft); color: var(--up); }
+.tag.info { background: var(--nss-bg); color: var(--nss); }
+.tag.neutral { background: var(--harbor-soft); color: var(--harbor); }
+.tag.warn { background: var(--warn-soft); color: var(--warn); }
+
+/* news + port */
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.pair section.card { border-top: 4px solid var(--c); }
+
+/* actions */
+.actions { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; }
+.steps { list-style: none; padding: 0; gap: 10px; }
+.steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.steps li b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--signal-soft); color: var(--signal); font-family: var(--mono); font-size: 12px; }
+.request { background: var(--panel); border-radius: 12px; padding: 14px 16px; border-left: 4px solid var(--signal); }
+footer { text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 4px; }
+@media (max-width: 600px) {
+  .band { padding: 22px 18px 22px; } section.card { padding: 18px 16px 20px; }
+  .actions { grid-template-columns: 1fr; }
+  .notes li { grid-template-columns: 1fr; gap: 4px; } .tag { justify-self: start; }
+}
+</style>
+
+<main class="sheet">
+  <header class="band">
+    <div class="eyebrow">Weekly Market Report · Jakarta to HQ</div>
+    <h1>Sinokor Jakarta — Weekly Market Report</h1>
+    <div class="meta"><span class="pill"><b>Week 42</b></span><span class="pill">13 October 2026</span><span class="pill">Prepared by: Jakarta Marketing</span></div>
+  </header>
+
+  <section class="card">
+    <h2><span class="n">1</span>Executive Summary</h2>
+    <div class="exec">
+      <article style="--c: var(--signal)"><div class="k">Palm oil to China under pressure</div><p>Indonesian palm product exports in August were 3.59Mt (up 12.56% MoM), but Malaysia has record stocks of 3.51Mt and Indonesian export duty and levy are higher in October. Chinese buyers may split orders toward Malaysian product.</p></article>
+      <article style="--c: var(--up)"><div class="k">Rubber at a 13-year high</div><p>Natural rubber was 264.80 US cents/kg on 12 October (up 53.6% YoY), driven by Thai flooding and rain. Cargo value is up, but volume is uncertain because Chinese tyre demand is soft.</p></article>
+      <article style="--c: var(--down)"><div class="k">Southeast Asia port delays</div><p>Tanjung Priok is running normally. Delays continue in Southeast Asia: congestion at Ho Chi Minh/Cai Mep and flood disruption on the landside at Laem Chabang.</p></article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>Jakarta Export Market</h2>
+    <div class="stats">
+      <div class="stat"><div class="big num">3.59Mt</div><span class="chg up">▲ 12.56% MoM</span><span class="lbl">Indonesian palm product exports, August</span></div>
+      <div class="stat"><div class="big num">264.80</div><span class="chg up">▲ 53.6% YoY</span><span class="lbl">Rubber, US cents/kg, 12 October</span></div>
+      <div class="stat"><div class="big num">6,057.87</div><span class="chg up">▲ 7.49%</span><span class="lbl">Cocoa bean reference price, USD/MT, October</span></div>
+      <div class="stat"><div class="big num">Rp17,913</div><span class="chg down">▼ Slightly weaker</span><span class="lbl">Rupiah per USD, 12 October</span></div>
+    </div>
+    <div class="blk"><h3>Palm oil and shortening · Shanghai/Shekou</h3><ul>
+      <li>Indonesian palm product exports (August): 3.59Mt, up 12.56% MoM. Refined products 2.64Mt, up 15.12%.</li>
+      <li>Export value January–August: USD 27.55 billion, up 11.14% YoY.</li>
+      <li>Malaysia September stocks: record 3.51Mt, up 24.54% MoM.</li>
+      <li>China was not among the destinations with the largest increases in August. China-lane volumes depend on existing contracts and Q4 food restocking before Chinese New Year.</li>
+    </ul></div>
+    <div class="blk"><h3>Natural rubber · Japan, Busan/Incheon, Shanghai/Shekou</h3><ul>
+      <li>Price on 12 October: 264.80 US cents/kg, up 12.2% MoM and up 53.6% YoY.</li>
+      <li>Drivers: flooding in Thailand, rain and El Niño risk.</li>
+      <li>Chinese tyre demand remains soft. Buyers may delay purchases at current prices.</li>
+    </ul></div>
+    <div class="blk"><h3>Cocoa · Shanghai/Shekou, some to Japan and Korea</h3><ul>
+      <li>October cocoa bean reference price: USD 6,057.87/MT, up 7.49%.</li>
+      <li>ICE cocoa on 12 October: USD 5,665.89/t, on West African supply risk.</li>
+      <li>Jakarta volume is mainly processed cocoa (butter, powder, liquor). Processed-cocoa container volumes are expected to be stable.</li>
+    </ul></div>
+    <div class="blk"><h3>Other</h3><ul>
+      <li>Rupiah closed at Rp17,913/USD on 12 October, slightly weaker. This supports exporters' price competitiveness.</li>
+      <li>Trade Expo Indonesia (TEI): 14–18 October at ICE BSD, Tangerang.</li>
+    </ul></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>Lane Outlook</h2>
+    <p class="callout">No lane shows a clear uptrend or downtrend this week.</p>
+    <ul class="lanes">
+      <li><b>China</b><span>Palm oil volumes should hold on Q4 restocking, with a risk of order-splitting toward Malaysia.</span></li>
+      <li><b>Japan/Korea</b><span>Rubber cargo value is high, but volume is uncertain.</span></li>
+      <li><b>Ho Chi Minh/Thailand</b><span>Port and landside delays affect schedules, not demand.</span></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>Competitor Rate Monitor</h2>
+    <p class="callout" style="border-left-color: var(--nss)">No rate update this week (monthly cycle). Latest position: see previous report.</p>
+  </section>
+
+  <div class="pair">
+    <section class="card" style="--c: var(--signal)">
+      <h2><span class="n">5</span>Competitor &amp; Service News</h2>
+      <ul>
+        <li>No new service, rotation, blank sailing or surcharge news touching Jakarta this week for KMTC, HMM, CK Line, Namsung, SITC, COSCO, Jin Jiang, ONE, RCL, Interasia or Gold Star Line.</li>
+        <li>Coming up: HMM/PIL/RCL Qingdao–Shanghai–Nansha–Jakarta loop starts 8 November.</li>
+        <li>COSCO launched a new Shekou–Nansha–Port Klang service (7 October). It does not call Jakarta.</li>
+        <li>ONE and HMM are expected to be the next carriers to return to Suez routing. No direct effect on our lanes.</li>
+        <li>Intra-Asia: congestion at Singapore, Port Klang and Ho Chi Minh/Cai Mep. Feeder capacity is tight in the Bangkok-max segment. Chinese port backlogs eased during National Day.</li>
+      </ul>
+    </section>
+    <section class="card" style="--c: var(--up)">
+      <h2><span class="n">6</span>Regulation &amp; Port Update</h2>
+      <ul>
+        <li>Tanjung Priok: operations normal. No congestion, strike or INSW/CEISA outage reported.</li>
+        <li>Weather: BMKG warned of waves up to 4m in some Indonesian waters on 10–13 October. The Java Sea had a high-wind warning.</li>
+        <li>ODOL (overloaded trucks): Kemenhub plans enforcement at ports ("Zero ODOL 2027"). The first trial is at Tanjung Perak, not Priok. No dates given.</li>
+        <li>Laem Chabang: port is operating. The Lat Krabang–Laem Chabang rail shuttle is suspended and road moves are slower due to flooding.</li>
+        <li>Palm oil (October): CPO reference price USD 1,042.15/MT, export duty USD 178/MT, levy 12.5%. November reference price is due around the end of October.</li>
+        <li>Cocoa beans (October): export duty 7.5% and levy 7.5%.</li>
+        <li>Rubber: no new export rule.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2><span class="n">7</span>Action Plan &amp; Request to HQ</h2>
+    <div class="actions">
+      <div>
+        <h3>Action Plan (Jakarta)</h3>
+        <ul class="steps">
+          <li><b>1</b><span>Keep close contact with Shanghai/Shekou shortening and olein shippers to protect contracts and spot order-splitting toward Malaysia early.</span></li>
+          <li><b>2</b><span>Check Q4 volumes with key rubber and tyre accounts for Japan and Korea.</span></li>
+          <li><b>3</b><span>Give HCM and Laem Chabang shippers realistic transit times and watch for schedule slippage.</span></li>
+          <li><b>4</b><span>Meet exporters at TEI 2026 (14–18 October) to find new shippers for the China, Japan and Korea lanes.</span></li>
+        </ul>
+      </div>
+      <div class="request">
+        <h3>Request to HQ</h3>
+        <p>No request this week.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Sinokor Merchant Marine · Jakarta Office · Week 42, 2026</footer>
+</main>
+
+</body></html>
